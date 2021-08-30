@@ -199,7 +199,6 @@ def main(params):
         loss = F.cross_entropy(receiver_output, labels, reduction="none")
         return loss, {"acc": acc}
 
-    # again, see data_readers.py in this directory for the AttValRecoDataset data reading class
     train_loader = DataLoader(
         SumCategoricalDataset(
             path=opts.train_data,
