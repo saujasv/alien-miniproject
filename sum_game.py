@@ -10,8 +10,6 @@ from torch.utils.data import DataLoader, Dataset
 
 import egg.core as core
 from egg.core import Callback, Interaction, PrintValidationEvents
-from egg.zoo.basic_games.architectures import RecoReceiver, Sender
-from egg.zoo.basic_games.data_readers import AttValRecoDataset
 
 
 # the following section specifies parameters that are specific to the sum games: this also inherits the
