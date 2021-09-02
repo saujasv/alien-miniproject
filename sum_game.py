@@ -5,6 +5,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import torch.optim as optim
 from torch.serialization import save
 from torch.utils.data import DataLoader, Dataset
 
@@ -153,10 +154,9 @@ class SumCategoricalReceiver(nn.Module):
         self.fc2 = nn.Linear(n_hidden, n_outputs)
 
     def forward(self, x, _input=None, _aux_input=None):
-        return F.log_softmax(
-            self.fc2(
+        return self.fc2(
                 torch.tanh(self.fc1(x))
-                ), dim=1)
+                )
 
 class SumCategoricalSender(nn.Module):
     def __init__(self, n_hidden, n_features, n_vocab):
@@ -164,15 +164,15 @@ class SumCategoricalSender(nn.Module):
 
         # 2 hidden layer MLP sender acting on input features
         self.fc1 = nn.Linear(n_features, n_hidden)
-        self.fc2 = nn.Linear(n_hidden, n_hidden)
+        # self.fc2 = nn.Linear(n_hidden, n_hidden)
         self.fc3 = nn.Linear(n_hidden, n_vocab)
 
     def forward(self, x, _aux_input=None):
         return F.log_softmax(
             self.fc3(
-                torch.tanh(self.fc2(
+                # torch.tanh(self.fc2(
                         torch.tanh(self.fc1(x))
-                    ))
+                    # ))
             ), dim=1)
 
 def main(params):
